@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/output_widget.dart';
+import '../widgets/toolbar_widget.dart';
+import '../widgets/drawing_canvas_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,14 +9,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Hello, World!'),
-            Text('Hello, World!'),
-          ],
-        ),
+      body: Column(
+        children: [
+          // First section - 40% of screen for OutputWidget
+          Expanded(
+            flex: 4,
+            child: OutputWidget(),
+          ),
+          // Middle section - 10% of screen for Toolbar
+          Expanded(
+            flex: 1,
+            child: ToolbarWidget(),
+          ),
+          // Bottom section - 40% of screen for Drawing Canvas
+          Expanded(
+            flex: 4,
+            child: DrawingCanvasWidget(),
+          ),
+        ],
       ),
     );
   }
