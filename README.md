@@ -1,4 +1,18 @@
-# nikko_digital_ink
+# Nikko Digital Ink
+
+```
+App Start → Check Model Status → Already Downloaded? 
+    ↓                              ↓
+    NO                             YES
+    ↓                              ↓
+Download Model                 Show "Ready"
+    ↓                              ↓
+Show "Ready"                   Enable Button
+    ↓                              ↓
+Enable Button              Navigate to Home
+    ↓
+Navigate to Home
+```
 
 A new Flutter project.
 
