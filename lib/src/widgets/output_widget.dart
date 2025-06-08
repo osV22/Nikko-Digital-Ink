@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/drawing_bloc.dart';
 
-class OutputWidget extends StatefulWidget {
+class OutputWidget extends StatelessWidget {
   const OutputWidget({super.key});
-
-  @override
-  State<OutputWidget> createState() => _OutputWidgetState();
-}
-
-class _OutputWidgetState extends State<OutputWidget> {
-  final TextEditingController _textController = TextEditingController();
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +11,37 @@ class _OutputWidgetState extends State<OutputWidget> {
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.grey[100],
+        border: Border.all(color: Colors.grey[300]!),
       ),
-      child: TextField(
-        controller: _textController,
-        maxLines: null,
-        expands: true,
-        textAlignVertical: TextAlignVertical.top,
-        style: const TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.w500,
-        ),
-        decoration: const InputDecoration(
-          hintText: 'Recognized text will appear here...',
-          hintStyle: TextStyle(
-            fontSize: 24.0,
-            color: Colors.grey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Recognized Text:',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          border: InputBorder.none,
-        ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: BlocBuilder<DrawingBloc, DrawingState>(
+              builder: (context, state) {
+                return TextField(
+                  controller: TextEditingController(text: state.recognizedText),
+                  maxLines: null,
+                  expands: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Draw Japanese characters below...',
+                    border: InputBorder.none,
+                  ),
+                  style: const TextStyle(fontSize: 24),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

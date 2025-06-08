@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Ink;
+import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/drawing_bloc.dart';
 import '../widgets/output_widget.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/drawing_canvas_widget.dart';
@@ -8,25 +11,28 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          // First section - 40% of screen for OutputWidget
-          Expanded(
-            flex: 4,
-            child: OutputWidget(),
-          ),
-          // Middle section - 10% of screen for Toolbar
-          Expanded(
-            flex: 1,
-            child: ToolbarWidget(),
-          ),
-          // Bottom section - 40% of screen for Drawing Canvas
-          Expanded(
-            flex: 4,
-            child: DrawingCanvasWidget(),
-          ),
-        ],
+    return BlocProvider(
+      create: (context) => DrawingBloc(),
+      child: const Scaffold(
+        body: Column(
+          children: [
+            // First section - 40% of screen for OutputWidget
+            Expanded(
+              flex: 4,
+              child: OutputWidget(),
+            ),
+            // Middle section - 10% of screen for Toolbar
+            Expanded(
+              flex: 1,
+              child: ToolbarWidget(),
+            ),
+            // Bottom section - 40% of screen for Drawing Canvas
+            Expanded(
+              flex: 4,
+              child: DrawingCanvasWidget(),
+            ),
+          ],
+        ),
       ),
     );
   }
