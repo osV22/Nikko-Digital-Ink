@@ -1,5 +1,5 @@
 name: nikko_digital_ink
-description: "A new Flutter project."
+description: "Flutter app for handwritten Japanese character recognition using Google ML Kit Digital Ink Recognition API"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -35,6 +35,20 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # ML Kit Digital Ink Recognition for Japanese character recognition
+  google_mlkit_digital_ink_recognition: ^0.12.0
+
+  # State Management with Bloc
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+
+  # Freezed for data classes and serialization
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Drawing canvas for handwriting input
+  signature: ^5.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,6 +59,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+
+  # Code generation for Freezed and JSON serialization
+  build_runner: ^2.4.12
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
