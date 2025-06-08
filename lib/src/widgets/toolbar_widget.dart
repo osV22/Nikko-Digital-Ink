@@ -19,18 +19,36 @@ class ToolbarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton.icon(
-            onPressed: () {
-              context.read<DrawingBloc>().add(
-                const DrawingEvent.clearRequested(),
-              );
-            },
-            icon: const Icon(Icons.clear),
-            label: const Text('Clear'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
+          Row(
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<DrawingBloc>().add(
+                    const DrawingEvent.processRequested(),
+                  );
+                },
+                icon: const Icon(Icons.auto_awesome),
+                label: const Text('Process'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<DrawingBloc>().add(
+                    const DrawingEvent.clearRequested(),
+                  );
+                },
+                icon: const Icon(Icons.clear),
+                label: const Text('Clear'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ],
           ),
           BlocBuilder<DrawingBloc, DrawingState>(
             builder: (context, state) {

@@ -13,27 +13,31 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     : _recognizer = DigitalInkRecognizer(languageCode: 'ja'),
       super(const DrawingState()) {
     on<DrawingStrokeAdded>(_onStrokeAdded);
+    on<DrawingProcessRequested>(_onProcessRequested);
     on<DrawingClearRequested>(_onClearRequested);
     on<DrawingCanvasClearRequested>(_onCanvasClearRequested);
   }
 
-  Future<void> _onStrokeAdded(
+  void _onStrokeAdded(
     DrawingStrokeAdded event,
     Emitter<DrawingState> emit,
-  ) async {
-    // Add stroke to list
+  ) {
+    // Just add stroke to list, don't process yet
     final updatedStrokes = [...state.strokes, event.stroke];
-    emit(
-      state.copyWith(
-        strokes: updatedStrokes,
-        isRecognizing: true,
-      ),
-    );
+    emit(state.copyWith(strokes: updatedStrokes));
+  }
 
-    // Perform recognition
+  Future<void> _onProcessRequested(
+    DrawingProcessRequested event,
+    Emitter<DrawingState> emit,
+  ) async {
+    if (state.strokes.isEmpty) return;
+
+    emit(state.copyWith(isRecognizing: true));
+
     try {
       final ink = Ink();
-      ink.strokes = updatedStrokes;
+      ink.strokes = state.strokes;
       final candidates = await _recognizer.recognize(ink);
 
       if (candidates.isNotEmpty) {

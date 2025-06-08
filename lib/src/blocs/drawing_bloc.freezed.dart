@@ -20,18 +20,21 @@ mixin _$DrawingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Stroke stroke) strokeAdded,
+    required TResult Function() processRequested,
     required TResult Function() clearRequested,
     required TResult Function() canvasClearRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Stroke stroke)? strokeAdded,
+    TResult? Function()? processRequested,
     TResult? Function()? clearRequested,
     TResult? Function()? canvasClearRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Stroke stroke)? strokeAdded,
+    TResult Function()? processRequested,
     TResult Function()? clearRequested,
     TResult Function()? canvasClearRequested,
     required TResult orElse(),
@@ -39,6 +42,7 @@ mixin _$DrawingEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DrawingStrokeAdded value) strokeAdded,
+    required TResult Function(DrawingProcessRequested value) processRequested,
     required TResult Function(DrawingClearRequested value) clearRequested,
     required TResult Function(DrawingCanvasClearRequested value)
     canvasClearRequested,
@@ -46,12 +50,14 @@ mixin _$DrawingEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult? Function(DrawingProcessRequested value)? processRequested,
     TResult? Function(DrawingClearRequested value)? clearRequested,
     TResult? Function(DrawingCanvasClearRequested value)? canvasClearRequested,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult Function(DrawingProcessRequested value)? processRequested,
     TResult Function(DrawingClearRequested value)? clearRequested,
     TResult Function(DrawingCanvasClearRequested value)? canvasClearRequested,
     required TResult orElse(),
@@ -154,6 +160,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Stroke stroke) strokeAdded,
+    required TResult Function() processRequested,
     required TResult Function() clearRequested,
     required TResult Function() canvasClearRequested,
   }) {
@@ -164,6 +171,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Stroke stroke)? strokeAdded,
+    TResult? Function()? processRequested,
     TResult? Function()? clearRequested,
     TResult? Function()? canvasClearRequested,
   }) {
@@ -174,6 +182,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Stroke stroke)? strokeAdded,
+    TResult Function()? processRequested,
     TResult Function()? clearRequested,
     TResult Function()? canvasClearRequested,
     required TResult orElse(),
@@ -188,6 +197,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DrawingStrokeAdded value) strokeAdded,
+    required TResult Function(DrawingProcessRequested value) processRequested,
     required TResult Function(DrawingClearRequested value) clearRequested,
     required TResult Function(DrawingCanvasClearRequested value)
     canvasClearRequested,
@@ -199,6 +209,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult? Function(DrawingProcessRequested value)? processRequested,
     TResult? Function(DrawingClearRequested value)? clearRequested,
     TResult? Function(DrawingCanvasClearRequested value)? canvasClearRequested,
   }) {
@@ -209,6 +220,7 @@ class _$DrawingStrokeAddedImpl implements DrawingStrokeAdded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult Function(DrawingProcessRequested value)? processRequested,
     TResult Function(DrawingClearRequested value)? clearRequested,
     TResult Function(DrawingCanvasClearRequested value)? canvasClearRequested,
     required TResult orElse(),
@@ -231,6 +243,127 @@ abstract class DrawingStrokeAdded implements DrawingEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DrawingStrokeAddedImplCopyWith<_$DrawingStrokeAddedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DrawingProcessRequestedImplCopyWith<$Res> {
+  factory _$$DrawingProcessRequestedImplCopyWith(
+    _$DrawingProcessRequestedImpl value,
+    $Res Function(_$DrawingProcessRequestedImpl) then,
+  ) = __$$DrawingProcessRequestedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DrawingProcessRequestedImplCopyWithImpl<$Res>
+    extends _$DrawingEventCopyWithImpl<$Res, _$DrawingProcessRequestedImpl>
+    implements _$$DrawingProcessRequestedImplCopyWith<$Res> {
+  __$$DrawingProcessRequestedImplCopyWithImpl(
+    _$DrawingProcessRequestedImpl _value,
+    $Res Function(_$DrawingProcessRequestedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DrawingEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$DrawingProcessRequestedImpl implements DrawingProcessRequested {
+  const _$DrawingProcessRequestedImpl();
+
+  @override
+  String toString() {
+    return 'DrawingEvent.processRequested()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DrawingProcessRequestedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Stroke stroke) strokeAdded,
+    required TResult Function() processRequested,
+    required TResult Function() clearRequested,
+    required TResult Function() canvasClearRequested,
+  }) {
+    return processRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Stroke stroke)? strokeAdded,
+    TResult? Function()? processRequested,
+    TResult? Function()? clearRequested,
+    TResult? Function()? canvasClearRequested,
+  }) {
+    return processRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Stroke stroke)? strokeAdded,
+    TResult Function()? processRequested,
+    TResult Function()? clearRequested,
+    TResult Function()? canvasClearRequested,
+    required TResult orElse(),
+  }) {
+    if (processRequested != null) {
+      return processRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DrawingStrokeAdded value) strokeAdded,
+    required TResult Function(DrawingProcessRequested value) processRequested,
+    required TResult Function(DrawingClearRequested value) clearRequested,
+    required TResult Function(DrawingCanvasClearRequested value)
+    canvasClearRequested,
+  }) {
+    return processRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult? Function(DrawingProcessRequested value)? processRequested,
+    TResult? Function(DrawingClearRequested value)? clearRequested,
+    TResult? Function(DrawingCanvasClearRequested value)? canvasClearRequested,
+  }) {
+    return processRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult Function(DrawingProcessRequested value)? processRequested,
+    TResult Function(DrawingClearRequested value)? clearRequested,
+    TResult Function(DrawingCanvasClearRequested value)? canvasClearRequested,
+    required TResult orElse(),
+  }) {
+    if (processRequested != null) {
+      return processRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DrawingProcessRequested implements DrawingEvent {
+  const factory DrawingProcessRequested() = _$DrawingProcessRequestedImpl;
 }
 
 /// @nodoc
@@ -278,6 +411,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Stroke stroke) strokeAdded,
+    required TResult Function() processRequested,
     required TResult Function() clearRequested,
     required TResult Function() canvasClearRequested,
   }) {
@@ -288,6 +422,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Stroke stroke)? strokeAdded,
+    TResult? Function()? processRequested,
     TResult? Function()? clearRequested,
     TResult? Function()? canvasClearRequested,
   }) {
@@ -298,6 +433,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Stroke stroke)? strokeAdded,
+    TResult Function()? processRequested,
     TResult Function()? clearRequested,
     TResult Function()? canvasClearRequested,
     required TResult orElse(),
@@ -312,6 +448,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DrawingStrokeAdded value) strokeAdded,
+    required TResult Function(DrawingProcessRequested value) processRequested,
     required TResult Function(DrawingClearRequested value) clearRequested,
     required TResult Function(DrawingCanvasClearRequested value)
     canvasClearRequested,
@@ -323,6 +460,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult? Function(DrawingProcessRequested value)? processRequested,
     TResult? Function(DrawingClearRequested value)? clearRequested,
     TResult? Function(DrawingCanvasClearRequested value)? canvasClearRequested,
   }) {
@@ -333,6 +471,7 @@ class _$DrawingClearRequestedImpl implements DrawingClearRequested {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult Function(DrawingProcessRequested value)? processRequested,
     TResult Function(DrawingClearRequested value)? clearRequested,
     TResult Function(DrawingCanvasClearRequested value)? canvasClearRequested,
     required TResult orElse(),
@@ -393,6 +532,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Stroke stroke) strokeAdded,
+    required TResult Function() processRequested,
     required TResult Function() clearRequested,
     required TResult Function() canvasClearRequested,
   }) {
@@ -403,6 +543,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Stroke stroke)? strokeAdded,
+    TResult? Function()? processRequested,
     TResult? Function()? clearRequested,
     TResult? Function()? canvasClearRequested,
   }) {
@@ -413,6 +554,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Stroke stroke)? strokeAdded,
+    TResult Function()? processRequested,
     TResult Function()? clearRequested,
     TResult Function()? canvasClearRequested,
     required TResult orElse(),
@@ -427,6 +569,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DrawingStrokeAdded value) strokeAdded,
+    required TResult Function(DrawingProcessRequested value) processRequested,
     required TResult Function(DrawingClearRequested value) clearRequested,
     required TResult Function(DrawingCanvasClearRequested value)
     canvasClearRequested,
@@ -438,6 +581,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult? Function(DrawingProcessRequested value)? processRequested,
     TResult? Function(DrawingClearRequested value)? clearRequested,
     TResult? Function(DrawingCanvasClearRequested value)? canvasClearRequested,
   }) {
@@ -448,6 +592,7 @@ class _$DrawingCanvasClearRequestedImpl implements DrawingCanvasClearRequested {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DrawingStrokeAdded value)? strokeAdded,
+    TResult Function(DrawingProcessRequested value)? processRequested,
     TResult Function(DrawingClearRequested value)? clearRequested,
     TResult Function(DrawingCanvasClearRequested value)? canvasClearRequested,
     required TResult orElse(),
