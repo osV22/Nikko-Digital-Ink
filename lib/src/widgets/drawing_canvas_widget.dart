@@ -5,6 +5,7 @@ import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_re
     hide Ink;
 import '../blocs/drawing_bloc.dart';
 import '../../l10n/app_localizations.dart';
+import '../utils/dotted_grid_painter.dart';
 
 class DrawingCanvasWidget extends StatefulWidget {
   const DrawingCanvasWidget({super.key});
@@ -102,11 +103,21 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
             ), // Slightly smaller to account for border
             child: Stack(
               children: [
-                // Background pattern (optional subtle grid)
+                // Background with subtle dotted grid
                 Container(
                   width: double.infinity,
                   height: double.infinity,
                   color: Colors.white,
+                  child: CustomPaint(
+                    painter: DottedGridPainter(
+                      dotColor: theme.colorScheme.outline.withValues(
+                        alpha: 0.15,
+                      ),
+                      dotSize: 1.2,
+                      spacing: 24.0,
+                    ),
+                    size: Size.infinite,
+                  ),
                 ),
                 // Drawing area
                 Signature(
@@ -126,18 +137,14 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
                             Icon(
                               Icons.draw,
                               size: 48,
-                              color: theme.colorScheme.onSurface.withValues(
-                                alpha: 0.3,
-                              ),
+                              color: Colors.blueGrey[50],
                             ),
                             const SizedBox(height: 12),
                             Text(
                               l10n?.drawJapaneseCharacters ??
                                   'Draw Japanese Characters',
                               style: theme.textTheme.titleMedium?.copyWith(
-                                color: theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.5,
-                                ),
+                                color: Colors.blueGrey[50],
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -146,9 +153,7 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
                               l10n?.useFingerOrStylus ??
                                   'Use your finger or stylus to write',
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.4,
-                                ),
+                                color: Colors.blueGrey[50],
                               ),
                             ),
                           ],
