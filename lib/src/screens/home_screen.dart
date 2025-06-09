@@ -13,25 +13,80 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DrawingBloc(),
-      child: const Scaffold(
-        body: Column(
-          children: [
-            // First section - 40% of screen for OutputWidget
-            Expanded(
-              flex: 4,
-              child: OutputWidget(),
-            ),
-            // Middle section - 10% of screen for Toolbar
-            Expanded(
-              flex: 1,
-              child: ToolbarWidget(),
-            ),
-            // Bottom section - 40% of screen for Drawing Canvas
-            Expanded(
-              flex: 4,
-              child: DrawingCanvasWidget(),
-            ),
-          ],
+      child: Scaffold(
+        backgroundColor: Colors.grey[25],
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isLandscape = constraints.maxWidth > constraints.maxHeight;
+
+              if (isLandscape) {
+                // Landscape layout: Drawing on left, output on right
+                return Row(
+                  children: [
+                    // Drawing section - 60% of width
+                    Expanded(
+                      flex: 6,
+                      child: Container(
+                        margin: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            const Expanded(
+                              child: DrawingCanvasWidget(),
+                            ),
+                            const SizedBox(height: 8),
+                            Container(
+                              height: 60,
+                              child: const ToolbarWidget(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Output section - 40% of width
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        margin: const EdgeInsets.all(8.0),
+                        child: const OutputWidget(),
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                // Portrait layout: Output on top, drawing on bottom
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      // Output section - 35% of screen
+                      Expanded(
+                        flex: 35,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 8.0),
+                          child: const OutputWidget(),
+                        ),
+                      ),
+                      // Toolbar section - 8% of screen
+                      Container(
+                        height: 60,
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: const ToolbarWidget(),
+                      ),
+                      // Drawing section - 57% of screen
+                      Expanded(
+                        flex: 57,
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 8.0),
+                          child: const DrawingCanvasWidget(),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

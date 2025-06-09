@@ -101,19 +101,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildHeader(),
-              const SizedBox(height: 48),
-              _buildStatusSection(),
-              const SizedBox(height: 48),
-              _buildContinueButton(),
-            ],
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceVariant.withOpacity(0.3),
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 48),
+                _buildStatusSection(),
+                const SizedBox(height: 48),
+                _buildContinueButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -121,36 +136,62 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildHeader() {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
-        const Icon(Icons.brush, size: 80, color: Colors.blue),
+        Icon(
+          Icons.brush,
+          size: 80,
+          color: theme.colorScheme.primary,
+        ),
         const SizedBox(height: 32),
-        const Text(
+        Text(
           _appTitle,
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          style: theme.textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.onSurface,
+          ),
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           _appSubtitle,
-          style: TextStyle(fontSize: 18, color: Colors.grey),
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: theme.colorScheme.onSurface.withOpacity(0.7),
+          ),
         ),
       ],
     );
   }
 
   Widget _buildStatusSection() {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         if (_isDownloading) ...[
-          const CircularProgressIndicator(),
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              theme.colorScheme.primary,
+            ),
+          ),
           const SizedBox(height: 24),
         ],
-        Text(
-          _downloadStatus,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            color: _isModelDownloaded ? Colors.green : Colors.grey[600],
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceVariant.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            _downloadStatus,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: _isModelDownloaded
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withOpacity(0.8),
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
@@ -158,19 +199,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildContinueButton() {
+    final theme = Theme.of(context);
+
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
+      child: FilledButton(
         onPressed: _isModelDownloaded ? () => context.goNamed('home') : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: _isModelDownloaded ? Colors.green : Colors.grey,
-          foregroundColor: Colors.white,
+        style: FilledButton.styleFrom(
+          backgroundColor: _isModelDownloaded
+              ? const Color.fromARGB(255, 74, 135, 233)
+              : theme.colorScheme.outline,
+          foregroundColor: _isModelDownloaded
+              ? Colors.white
+              : theme.colorScheme.onSurface.withOpacity(0.6),
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
         child: Text(
           _isModelDownloaded ? 'Get Started' : 'Please Wait...',
-          style: const TextStyle(fontSize: 18),
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

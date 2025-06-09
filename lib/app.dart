@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'router.dart';
+import 'src/style/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,11 +9,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Nikko Digital Ink',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       routerConfig: AppRouter.createRouter(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

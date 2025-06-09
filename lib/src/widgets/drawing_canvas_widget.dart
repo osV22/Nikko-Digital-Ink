@@ -20,7 +20,7 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
     super.initState();
     _controller = SignatureController(
       penStrokeWidth: 3,
-      penColor: Colors.black,
+      penColor: const Color(0xFF435053),
       exportBackgroundColor: Colors.white,
     );
     _controller.onDrawEnd = _onStrokeEnd;
@@ -61,6 +61,8 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<DrawingBloc, DrawingState>(
       listenWhen: (previous, current) => current.shouldClearCanvas,
       listener: (context, state) {
@@ -69,16 +71,92 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
           const DrawingEvent.canvasClearRequested(),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey[300]!),
+      child: Card(
+        elevation: 2,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Signature(
-          controller: _controller,
-          height: double.infinity,
+        child: Container(
           width: double.infinity,
-          backgroundColor: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: theme.colorScheme.outline.withOpacity(0.2),
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.shadow.withOpacity(0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(
+              11,
+            ), // Slightly smaller to account for border
+            child: Stack(
+              children: [
+                // Background pattern (optional subtle grid)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.white,
+                ),
+                // Drawing area
+                Signature(
+                  controller: _controller,
+                  height: double.infinity,
+                  width: double.infinity,
+                  backgroundColor: Colors.transparent,
+                ),
+                // Hint overlay when no strokes
+                BlocBuilder<DrawingBloc, DrawingState>(
+                  builder: (context, state) {
+                    if (state.strokes.isEmpty && !state.isRecognizing) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.draw,
+                              size: 48,
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.3,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'Draw Japanese Characters',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.5,
+                                ),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Use your finger or stylus to write',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.4,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
