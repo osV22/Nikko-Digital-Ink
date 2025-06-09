@@ -5,6 +5,7 @@ import '../services/digital_ink_service.dart';
 import '../widgets/output_widget.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/drawing_canvas_widget.dart';
+import '../widgets/drawing_toolbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,6 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
+                            // Drawing toolbar above canvas in landscape
+                            Container(
+                              height: 60,
+                              margin: const EdgeInsets.only(bottom: 8.0),
+                              child: const DrawingToolbarWidget(),
+                            ),
                             const Expanded(
                               child: DrawingCanvasWidget(),
                             ),
@@ -88,32 +95,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 );
               } else {
-                // Portrait layout: Output on top, drawing on bottom
+                // Portrait layout: Output on top, toolbar, drawing, drawing toolbar
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      // Output section - 35% of screen
+                      // Output section - 30% of screen
                       Expanded(
-                        flex: 35,
+                        flex: 30,
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 8.0),
                           child: const OutputWidget(),
                         ),
                       ),
-                      // Toolbar section - 8% of screen
+                      // Toolbar section - 10% of screen
                       Container(
                         height: 60,
                         margin: const EdgeInsets.symmetric(vertical: 4.0),
                         child: const ToolbarWidget(),
                       ),
-                      // Drawing section - 57% of screen
+                      // Drawing section - 40% of screen
                       Expanded(
-                        flex: 57,
+                        flex: 40,
                         child: Container(
-                          margin: const EdgeInsets.only(top: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 4.0),
                           child: const DrawingCanvasWidget(),
                         ),
+                      ),
+                      // Drawing toolbar section - 10% of screen
+                      Container(
+                        height: 60,
+                        margin: const EdgeInsets.only(top: 4.0),
+                        child: const DrawingToolbarWidget(),
                       ),
                     ],
                   ),
