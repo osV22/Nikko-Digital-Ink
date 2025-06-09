@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const _primaryColor = Color(0xFF1976D2);
-  static const _primaryVariantColor = Color(0xFF1565C0);
-  static const _secondaryColor = Color(0xFF03DAC6);
 
   static ThemeData get lightTheme {
     final ColorScheme colorScheme = ColorScheme.fromSeed(
@@ -173,7 +171,7 @@ class AppTheme {
 
       // Divider Theme
       dividerTheme: DividerThemeData(
-        color: colorScheme.outline.withOpacity(0.2),
+        color: colorScheme.outline.withValues(alpha: 0.2),
         thickness: 1,
       ),
     );
@@ -255,7 +253,7 @@ class AppTheme {
 
       // Divider Theme
       dividerTheme: DividerThemeData(
-        color: colorScheme.outline.withOpacity(0.2),
+        color: colorScheme.outline.withValues(alpha: 0.2),
         thickness: 1,
       ),
     );

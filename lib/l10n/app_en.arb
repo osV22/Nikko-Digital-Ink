@@ -1,0 +1,76 @@
+{
+  "appTitle": "Nikko Digital Ink",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "appSubtitle": "Japanese Character Recognition",
+  "@appSubtitle": {
+    "description": "The subtitle of the application"
+  },
+  "checkingModelStatus": "Checking model status...",
+  "@checkingModelStatus": {
+    "description": "Status message when checking if ML model is downloaded"
+  },
+  "downloadingModel": "Downloading AI Model, please wait...",
+  "@downloadingModel": {
+    "description": "Status message when downloading ML model"
+  },
+  "modelReady": "Model ready! You can now proceed.",
+  "@modelReady": {
+    "description": "Status message when ML model is ready"
+  },
+  "downloadFailed": "Failed to download model. Please try again.",
+  "@downloadFailed": {
+    "description": "Error message when model download fails"
+  },
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Button text to proceed to main app"
+  },
+  "pleaseWait": "Please Wait...",
+  "@pleaseWait": {
+    "description": "Button text when waiting"
+  },
+  "recognizedText": "Recognized Text",
+  "@recognizedText": {
+    "description": "Header for recognized text section"
+  },
+  "drawCharactersHint": "Draw Japanese characters below to see recognition results...",
+  "@drawCharactersHint": {
+    "description": "Hint text when no text is recognized"
+  },
+  "process": "Process",
+  "@process": {
+    "description": "Button text to process drawing"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Button text to clear drawing"
+  },
+  "processing": "Processing...",
+  "@processing": {
+    "description": "Status text when processing"
+  },
+  "strokes": "Strokes: {count}",
+  "@strokes": {
+    "description": "Status text showing stroke count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "drawJapaneseCharacters": "Draw Japanese Characters",
+  "@drawJapaneseCharacters": {
+    "description": "Instruction text on drawing canvas"
+  },
+  "useFingerOrStylus": "Use your finger or stylus to write",
+  "@useFingerOrStylus": {
+    "description": "Additional instruction text on drawing canvas"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language selector label"
+  }
+} 

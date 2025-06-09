@@ -1,0 +1,19 @@
+{
+  "appTitle": "ニッコーデジタルインク",
+  "appSubtitle": "日本語文字認識",
+  "checkingModelStatus": "モデルの状態を確認しています...",
+  "downloadingModel": "AIモデルをダウンロードしています。お待ちください...",
+  "modelReady": "モデルの準備ができました！続行できます。",
+  "downloadFailed": "モデルのダウンロードに失敗しました。もう一度お試しください。",
+  "getStarted": "開始",
+  "pleaseWait": "お待ちください...",
+  "recognizedText": "認識されたテキスト",
+  "drawCharactersHint": "下に日本語の文字を描いて認識結果を確認してください...",
+  "process": "処理",
+  "clear": "クリア",
+  "processing": "処理中...",
+  "strokes": "ストローク: {count}",
+  "drawJapaneseCharacters": "日本語の文字を描く",
+  "useFingerOrStylus": "指またはスタイラスを使って書いてください",
+  "language": "言語"
+} 

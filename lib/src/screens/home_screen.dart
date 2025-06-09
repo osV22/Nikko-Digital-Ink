@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Ink;
-import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawing_bloc.dart';
 import '../widgets/output_widget.dart';
@@ -35,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                               child: DrawingCanvasWidget(),
                             ),
                             const SizedBox(height: 8),
-                            Container(
+                            SizedBox(
                               height: 60,
                               child: const ToolbarWidget(),
                             ),

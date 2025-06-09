@@ -4,6 +4,7 @@ import 'package:signature/signature.dart';
 import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart'
     hide Ink;
 import '../blocs/drawing_bloc.dart';
+import '../../l10n/app_localizations.dart';
 
 class DrawingCanvasWidget extends StatefulWidget {
   const DrawingCanvasWidget({super.key});
@@ -62,6 +63,7 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return BlocListener<DrawingBloc, DrawingState>(
       listenWhen: (previous, current) => current.shouldClearCanvas,
@@ -83,12 +85,12 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: theme.colorScheme.outline.withOpacity(0.2),
+              color: theme.colorScheme.outline.withValues(alpha: 0.2),
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: theme.colorScheme.shadow.withOpacity(0.05),
+                color: theme.colorScheme.shadow.withValues(alpha: 0.05),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
@@ -124,26 +126,28 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
                             Icon(
                               Icons.draw,
                               size: 48,
-                              color: theme.colorScheme.onSurface.withOpacity(
-                                0.3,
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.3,
                               ),
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Draw Japanese Characters',
+                              l10n?.drawJapaneseCharacters ??
+                                  'Draw Japanese Characters',
                               style: theme.textTheme.titleMedium?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.5,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.5,
                                 ),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Use your finger or stylus to write',
+                              l10n?.useFingerOrStylus ??
+                                  'Use your finger or stylus to write',
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.4,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.4,
                                 ),
                               ),
                             ),

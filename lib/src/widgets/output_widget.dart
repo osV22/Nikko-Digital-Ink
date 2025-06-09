@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawing_bloc.dart';
+import '../../l10n/app_localizations.dart';
 
 class OutputWidget extends StatelessWidget {
   const OutputWidget({super.key});
@@ -8,6 +9,7 @@ class OutputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Card(
       elevation: 2,
@@ -21,12 +23,12 @@ class OutputWidget extends StatelessWidget {
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: theme.colorScheme.outline.withOpacity(0.2),
+            color: theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +41,7 @@ class OutputWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Recognized Text',
+                    l10n?.recognizedText ?? 'Recognized Text',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: theme.colorScheme.onSurface,
@@ -53,10 +55,12 @@ class OutputWidget extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceVariant.withOpacity(0.1),
+                    color: theme.colorScheme.surfaceContainerHighest.withValues(
+                      alpha: 0.1,
+                    ),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: theme.colorScheme.outline.withOpacity(0.05),
+                      color: theme.colorScheme.outline.withValues(alpha: 0.05),
                     ),
                   ),
                   child: BlocBuilder<DrawingBloc, DrawingState>(
@@ -67,10 +71,12 @@ class OutputWidget extends StatelessWidget {
                           children: [
                             if (state.recognizedText.isEmpty)
                               Text(
-                                'Draw Japanese characters below to see recognition results...',
+                                l10n?.drawCharactersHint ??
+                                    'Draw Japanese characters below to see recognition results...',
                                 style: theme.textTheme.bodyLarge?.copyWith(
-                                  color: theme.colorScheme.onSurface
-                                      .withOpacity(0.6),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.6,
+                                  ),
                                   fontStyle: FontStyle.italic,
                                 ),
                               )
@@ -89,11 +95,11 @@ class OutputWidget extends StatelessWidget {
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
                                   color: theme.colorScheme.errorContainer
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(6),
                                   border: Border.all(
-                                    color: theme.colorScheme.error.withOpacity(
-                                      0.3,
+                                    color: theme.colorScheme.error.withValues(
+                                      alpha: 0.3,
                                     ),
                                   ),
                                 ),
