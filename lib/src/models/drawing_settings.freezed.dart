@@ -18,7 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DrawingSettings {
   double get strokeWidth => throw _privateConstructorUsedError;
+  double get maxStrokeWidth => throw _privateConstructorUsedError;
   Color get strokeColor => throw _privateConstructorUsedError;
+  SignatureDrawType get drawType => throw _privateConstructorUsedError;
+  double get threshold => throw _privateConstructorUsedError;
+  double get smoothRatio => throw _privateConstructorUsedError;
+  double get velocityRange => throw _privateConstructorUsedError;
 
   /// Create a copy of DrawingSettings
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +39,15 @@ abstract class $DrawingSettingsCopyWith<$Res> {
     $Res Function(DrawingSettings) then,
   ) = _$DrawingSettingsCopyWithImpl<$Res, DrawingSettings>;
   @useResult
-  $Res call({double strokeWidth, Color strokeColor});
+  $Res call({
+    double strokeWidth,
+    double maxStrokeWidth,
+    Color strokeColor,
+    SignatureDrawType drawType,
+    double threshold,
+    double smoothRatio,
+    double velocityRange,
+  });
 }
 
 /// @nodoc
@@ -51,17 +64,45 @@ class _$DrawingSettingsCopyWithImpl<$Res, $Val extends DrawingSettings>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? strokeWidth = null, Object? strokeColor = null}) {
+  $Res call({
+    Object? strokeWidth = null,
+    Object? maxStrokeWidth = null,
+    Object? strokeColor = null,
+    Object? drawType = null,
+    Object? threshold = null,
+    Object? smoothRatio = null,
+    Object? velocityRange = null,
+  }) {
     return _then(
       _value.copyWith(
             strokeWidth: null == strokeWidth
                 ? _value.strokeWidth
                 : strokeWidth // ignore: cast_nullable_to_non_nullable
                       as double,
+            maxStrokeWidth: null == maxStrokeWidth
+                ? _value.maxStrokeWidth
+                : maxStrokeWidth // ignore: cast_nullable_to_non_nullable
+                      as double,
             strokeColor: null == strokeColor
                 ? _value.strokeColor
                 : strokeColor // ignore: cast_nullable_to_non_nullable
                       as Color,
+            drawType: null == drawType
+                ? _value.drawType
+                : drawType // ignore: cast_nullable_to_non_nullable
+                      as SignatureDrawType,
+            threshold: null == threshold
+                ? _value.threshold
+                : threshold // ignore: cast_nullable_to_non_nullable
+                      as double,
+            smoothRatio: null == smoothRatio
+                ? _value.smoothRatio
+                : smoothRatio // ignore: cast_nullable_to_non_nullable
+                      as double,
+            velocityRange: null == velocityRange
+                ? _value.velocityRange
+                : velocityRange // ignore: cast_nullable_to_non_nullable
+                      as double,
           )
           as $Val,
     );
@@ -77,7 +118,15 @@ abstract class _$$DrawingSettingsImplCopyWith<$Res>
   ) = __$$DrawingSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double strokeWidth, Color strokeColor});
+  $Res call({
+    double strokeWidth,
+    double maxStrokeWidth,
+    Color strokeColor,
+    SignatureDrawType drawType,
+    double threshold,
+    double smoothRatio,
+    double velocityRange,
+  });
 }
 
 /// @nodoc
@@ -93,17 +142,45 @@ class __$$DrawingSettingsImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? strokeWidth = null, Object? strokeColor = null}) {
+  $Res call({
+    Object? strokeWidth = null,
+    Object? maxStrokeWidth = null,
+    Object? strokeColor = null,
+    Object? drawType = null,
+    Object? threshold = null,
+    Object? smoothRatio = null,
+    Object? velocityRange = null,
+  }) {
     return _then(
       _$DrawingSettingsImpl(
         strokeWidth: null == strokeWidth
             ? _value.strokeWidth
             : strokeWidth // ignore: cast_nullable_to_non_nullable
                   as double,
+        maxStrokeWidth: null == maxStrokeWidth
+            ? _value.maxStrokeWidth
+            : maxStrokeWidth // ignore: cast_nullable_to_non_nullable
+                  as double,
         strokeColor: null == strokeColor
             ? _value.strokeColor
             : strokeColor // ignore: cast_nullable_to_non_nullable
                   as Color,
+        drawType: null == drawType
+            ? _value.drawType
+            : drawType // ignore: cast_nullable_to_non_nullable
+                  as SignatureDrawType,
+        threshold: null == threshold
+            ? _value.threshold
+            : threshold // ignore: cast_nullable_to_non_nullable
+                  as double,
+        smoothRatio: null == smoothRatio
+            ? _value.smoothRatio
+            : smoothRatio // ignore: cast_nullable_to_non_nullable
+                  as double,
+        velocityRange: null == velocityRange
+            ? _value.velocityRange
+            : velocityRange // ignore: cast_nullable_to_non_nullable
+                  as double,
       ),
     );
   }
@@ -114,7 +191,12 @@ class __$$DrawingSettingsImplCopyWithImpl<$Res>
 class _$DrawingSettingsImpl implements _DrawingSettings {
   const _$DrawingSettingsImpl({
     this.strokeWidth = 4.0,
+    this.maxStrokeWidth = 8.0,
     this.strokeColor = const Color(0xFF000000),
+    this.drawType = SignatureDrawType.shape,
+    this.threshold = 3.0,
+    this.smoothRatio = 0.65,
+    this.velocityRange = 2.0,
   });
 
   @override
@@ -122,11 +204,26 @@ class _$DrawingSettingsImpl implements _DrawingSettings {
   final double strokeWidth;
   @override
   @JsonKey()
+  final double maxStrokeWidth;
+  @override
+  @JsonKey()
   final Color strokeColor;
+  @override
+  @JsonKey()
+  final SignatureDrawType drawType;
+  @override
+  @JsonKey()
+  final double threshold;
+  @override
+  @JsonKey()
+  final double smoothRatio;
+  @override
+  @JsonKey()
+  final double velocityRange;
 
   @override
   String toString() {
-    return 'DrawingSettings(strokeWidth: $strokeWidth, strokeColor: $strokeColor)';
+    return 'DrawingSettings(strokeWidth: $strokeWidth, maxStrokeWidth: $maxStrokeWidth, strokeColor: $strokeColor, drawType: $drawType, threshold: $threshold, smoothRatio: $smoothRatio, velocityRange: $velocityRange)';
   }
 
   @override
@@ -136,12 +233,31 @@ class _$DrawingSettingsImpl implements _DrawingSettings {
             other is _$DrawingSettingsImpl &&
             (identical(other.strokeWidth, strokeWidth) ||
                 other.strokeWidth == strokeWidth) &&
+            (identical(other.maxStrokeWidth, maxStrokeWidth) ||
+                other.maxStrokeWidth == maxStrokeWidth) &&
             (identical(other.strokeColor, strokeColor) ||
-                other.strokeColor == strokeColor));
+                other.strokeColor == strokeColor) &&
+            (identical(other.drawType, drawType) ||
+                other.drawType == drawType) &&
+            (identical(other.threshold, threshold) ||
+                other.threshold == threshold) &&
+            (identical(other.smoothRatio, smoothRatio) ||
+                other.smoothRatio == smoothRatio) &&
+            (identical(other.velocityRange, velocityRange) ||
+                other.velocityRange == velocityRange));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, strokeWidth, strokeColor);
+  int get hashCode => Object.hash(
+    runtimeType,
+    strokeWidth,
+    maxStrokeWidth,
+    strokeColor,
+    drawType,
+    threshold,
+    smoothRatio,
+    velocityRange,
+  );
 
   /// Create a copy of DrawingSettings
   /// with the given fields replaced by the non-null parameter values.
@@ -158,13 +274,28 @@ class _$DrawingSettingsImpl implements _DrawingSettings {
 abstract class _DrawingSettings implements DrawingSettings {
   const factory _DrawingSettings({
     final double strokeWidth,
+    final double maxStrokeWidth,
     final Color strokeColor,
+    final SignatureDrawType drawType,
+    final double threshold,
+    final double smoothRatio,
+    final double velocityRange,
   }) = _$DrawingSettingsImpl;
 
   @override
   double get strokeWidth;
   @override
+  double get maxStrokeWidth;
+  @override
   Color get strokeColor;
+  @override
+  SignatureDrawType get drawType;
+  @override
+  double get threshold;
+  @override
+  double get smoothRatio;
+  @override
+  double get velocityRange;
 
   /// Create a copy of DrawingSettings
   /// with the given fields replaced by the non-null parameter values.

@@ -49,8 +49,8 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
 
-  # Drawing canvas for handwriting input
-  signature: ^5.5.0
+  # Drawing canvas for handwriting input with better quality
+  hand_signature: ^3.0.3
 
   # Navigation and routing
   go_router: ^14.2.7
