@@ -21,8 +21,8 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
   void initState() {
     super.initState();
     _controller = SignatureController(
-      penStrokeWidth: 3,
-      penColor: const Color(0xFF435053),
+      penStrokeWidth: 4, // Slightly thicker for better stroke quality
+      penColor: const Color(0xFF2E3436), // Darker color for better contrast
       exportBackgroundColor: Colors.white,
     );
     _controller.onDrawEnd = _onStrokeEnd;

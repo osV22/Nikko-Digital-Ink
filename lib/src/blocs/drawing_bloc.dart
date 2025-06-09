@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../services/digital_ink_service.dart';
+import '../utils/ink_optimizer.dart';
 
 part 'drawing_bloc.freezed.dart';
 part 'drawing_event.dart';
@@ -37,12 +38,31 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     emit(state.copyWith(isRecognizing: true));
 
     try {
-      final ink = Ink();
-      ink.strokes = state.strokes;
+      // Remove noise strokes before processing
+      final cleanStrokes = InkOptimizer.removeNoiseStrokes(state.strokes);
+      if (cleanStrokes.isEmpty) {
+        emit(state.copyWith(isRecognizing: false));
+        return;
+      }
 
-      final recognizedText = await _digitalInkService.recognizeText(ink);
+      // Optimize ink for Japanese character recognition
+      var optimizedInk = InkOptimizer.optimizeForJapanese(cleanStrokes);
 
-      if (recognizedText != null) {
+      // Add character spacing for better recognition
+      optimizedInk = InkOptimizer.addCharacterSpacing(
+        optimizedInk,
+        100.0,
+      ); // 100ms spacing
+
+      // For Japanese, get multiple candidates for better accuracy
+      final candidates = await _digitalInkService.getRecognitionCandidates(
+        optimizedInk,
+        maxCandidates: 3,
+      );
+
+      if (candidates.isNotEmpty) {
+        // Use the best candidate but could show alternatives to user
+        final recognizedText = candidates.first;
         emit(
           state.copyWith(
             recognizedText: state.recognizedText + recognizedText,

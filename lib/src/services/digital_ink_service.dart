@@ -68,6 +68,19 @@ class DigitalInkService {
     return null;
   }
 
+  /// Get multiple recognition candidates for better accuracy assessment
+  Future<List<String>> getRecognitionCandidates(
+    Ink ink, {
+    int maxCandidates = 3,
+  }) async {
+    final candidates = await recognizeInk(ink);
+
+    return candidates
+        .take(maxCandidates)
+        .map((candidate) => candidate.text)
+        .toList();
+  }
+
   String get currentLanguageCode => _currentLanguageCode;
 
   /// requires reinitialization
