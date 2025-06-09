@@ -6,24 +6,56 @@ import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_re
 import '../blocs/drawing_bloc.dart';
 import '../../l10n/app_localizations.dart';
 import '../utils/dotted_grid_painter.dart';
+import '../models/drawing_settings.dart';
 
 class DrawingCanvasWidget extends StatefulWidget {
-  const DrawingCanvasWidget({super.key});
+  final DrawingSettings settings;
+
+  const DrawingCanvasWidget({
+    super.key,
+    required this.settings,
+  });
 
   @override
   State<DrawingCanvasWidget> createState() => _DrawingCanvasWidgetState();
 }
 
 class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
-  late final SignatureController _controller;
+  late SignatureController _controller;
 
   @override
   void initState() {
     super.initState();
+    _initializeController();
+  }
+
+  @override
+  void didUpdateWidget(DrawingCanvasWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.settings != widget.settings) {
+      _updateController();
+    }
+  }
+
+  void _initializeController() {
     _controller = SignatureController(
-      penStrokeWidth: 4, // Slightly thicker for better stroke quality
-      penColor: const Color(0xFF2E3436), // Darker color for better contrast
+      penStrokeWidth: widget.settings.strokeWidth,
+      penColor: widget.settings.strokeColor,
       exportBackgroundColor: Colors.white,
+    );
+    _controller.onDrawEnd = _onStrokeEnd;
+  }
+
+  void _updateController() {
+    final currentPoints = _controller.points;
+
+    _controller.dispose();
+
+    _controller = SignatureController(
+      penStrokeWidth: widget.settings.strokeWidth,
+      penColor: widget.settings.strokeColor,
+      exportBackgroundColor: Colors.white,
+      points: currentPoints, // Preserve existing drawing
     );
     _controller.onDrawEnd = _onStrokeEnd;
   }

@@ -6,6 +6,7 @@ import '../widgets/output_widget.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/drawing_canvas_widget.dart';
 import '../widgets/drawing_toolbar_widget.dart';
+import '../models/drawing_settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final DigitalInkService _digitalInkService;
   late final DrawingBloc _drawingBloc;
+  DrawingSettings _drawingSettings = const DrawingSettings();
 
   @override
   void initState() {
@@ -24,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _digitalInkService = DigitalInkService();
     _drawingBloc = DrawingBloc(digitalInkService: _digitalInkService);
 
-    // Initialize the service asynchronously
     _initializeService();
   }
 
@@ -32,9 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       await _digitalInkService.initialize();
     } catch (e) {
-      // Handle initialization error
       debugPrint('Failed to initialize Digital Ink Service: $e');
     }
+  }
+
+  void _onDrawingSettingsChanged(DrawingSettings newSettings) {
+    setState(() {
+      _drawingSettings = newSettings;
+    });
   }
 
   @override
@@ -70,10 +76,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             Container(
                               height: 60,
                               margin: const EdgeInsets.only(bottom: 8.0),
-                              child: const DrawingToolbarWidget(),
+                              child: DrawingToolbarWidget(
+                                settings: _drawingSettings,
+                                onSettingsChanged: _onDrawingSettingsChanged,
+                              ),
                             ),
-                            const Expanded(
-                              child: DrawingCanvasWidget(),
+                            Expanded(
+                              child: DrawingCanvasWidget(
+                                settings: _drawingSettings,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             SizedBox(
@@ -119,14 +130,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         flex: 40,
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: const DrawingCanvasWidget(),
+                          child: DrawingCanvasWidget(
+                            settings: _drawingSettings,
+                          ),
                         ),
                       ),
                       // Drawing toolbar section - 10% of screen
                       Container(
                         height: 60,
                         margin: const EdgeInsets.only(top: 4.0),
-                        child: const DrawingToolbarWidget(),
+                        child: DrawingToolbarWidget(
+                          settings: _drawingSettings,
+                          onSettingsChanged: _onDrawingSettingsChanged,
+                        ),
                       ),
                     ],
                   ),
