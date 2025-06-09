@@ -87,6 +87,7 @@ class OutputWidget extends StatelessWidget {
                                   color: theme.colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
+                                  fontSize: 50,
                                 ),
                               ),
                             if (state.errorMessage != null) ...[

@@ -1,16 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../services/digital_ink_service.dart';
 
 part 'drawing_bloc.freezed.dart';
 part 'drawing_event.dart';
 part 'drawing_state.dart';
 
 class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
-  final DigitalInkRecognizer _recognizer;
+  final DigitalInkService _digitalInkService;
 
-  DrawingBloc()
-    : _recognizer = DigitalInkRecognizer(languageCode: 'ja'),
+  DrawingBloc({DigitalInkService? digitalInkService})
+    : _digitalInkService = digitalInkService ?? DigitalInkService(),
       super(const DrawingState()) {
     on<DrawingStrokeAdded>(_onStrokeAdded);
     on<DrawingProcessRequested>(_onProcessRequested);
@@ -38,10 +39,10 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
     try {
       final ink = Ink();
       ink.strokes = state.strokes;
-      final candidates = await _recognizer.recognize(ink);
 
-      if (candidates.isNotEmpty) {
-        final recognizedText = candidates.first.text;
+      final recognizedText = await _digitalInkService.recognizeText(ink);
+
+      if (recognizedText != null) {
         emit(
           state.copyWith(
             recognizedText: state.recognizedText + recognizedText,
@@ -83,8 +84,8 @@ class DrawingBloc extends Bloc<DrawingEvent, DrawingState> {
   }
 
   @override
-  Future<void> close() {
-    _recognizer.close();
+  Future<void> close() async {
+    await _digitalInkService.dispose();
     return super.close();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 import '../widgets/language_toggle_widget.dart';
 import '../widgets/onboarding_header_widget.dart';
 import '../widgets/status_section_widget.dart';
 import '../widgets/onboarding_continue_button.dart';
+import '../services/digital_ink_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -21,9 +21,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _isDownloading = false;
   String _downloadStatus = '';
 
-  // ML Kit components
-  DigitalInkRecognizer? _recognizer;
-  DigitalInkRecognizerModelManager? _modelManager;
+  // Digital Ink Service
+  final DigitalInkService _digitalInkService = DigitalInkService();
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
-    _recognizer?.close();
+    _digitalInkService.dispose();
     super.dispose();
   }
 
@@ -41,11 +40,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _updateStatus(isDownloading: true, status: 'checkingModelStatus');
 
     try {
-      _modelManager = DigitalInkRecognizerModelManager();
-
-      final bool isDownloaded = await _modelManager!.isModelDownloaded(
-        _languageCode,
-      );
+      // Check if model is already downloaded
+      final bool isDownloaded = await _digitalInkService.isModelDownloaded();
 
       if (isDownloaded) {
         _onModelReady();
@@ -53,8 +49,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         await _downloadModel();
       }
 
-      // Initialize recognizer after model is ready
-      _recognizer = DigitalInkRecognizer(languageCode: _languageCode);
+      // Initialize the service
+      await _digitalInkService.initialize(languageCode: _languageCode);
     } catch (e) {
       _updateStatus(isDownloading: false, status: 'Error: ${e.toString()}');
     }
@@ -66,13 +62,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       status: 'downloadingModel',
     );
 
-    final bool downloadSuccess = await _modelManager!.downloadModel(
-      _languageCode,
-    );
+    try {
+      final bool downloadSuccess = await _digitalInkService.downloadModel();
 
-    if (downloadSuccess) {
-      _onModelReady();
-    } else {
+      if (downloadSuccess) {
+        _onModelReady();
+      } else {
+        _updateStatus(
+          isDownloading: false,
+          status: 'downloadFailed',
+        );
+      }
+    } catch (e) {
       _updateStatus(
         isDownloading: false,
         status: 'downloadFailed',
