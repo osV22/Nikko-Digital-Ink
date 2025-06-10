@@ -44,57 +44,47 @@ class DrawingToolbarWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Stroke width controls
-            _buildSection(
-              context,
-              title: 'Width',
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: DrawingSettings.availableStrokeWidths
-                    .take(4) // Limit to 4 widths to save space
-                    .map((width) => _buildStrokeWidthButton(context, width))
-                    .toList(),
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: DrawingSettings.availableStrokeWidths
+                  .take(4) // Limit to 4 widths to save space
+                  .map((width) => _buildStrokeWidthButton(context, width))
+                  .toList(),
             ),
-            SizedBox(width: ResponsiveUtils.scalePadding(context, 24)),
+
+            _buildVerticalDivider(context),
 
             // Color picker
-            _buildSection(
-              context,
-              title: 'Color',
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: DrawingSettings.availableColors
-                    .take(4) // Show 4 colors
-                    .map((color) => _buildColorButton(context, color))
-                    .toList(),
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: DrawingSettings.availableColors
+                  .take(4) // Show 4 colors
+                  .map((color) => _buildColorButton(context, color))
+                  .toList(),
             ),
+
+            _buildVerticalDivider(context),
+
+            // Placeholder for future section
+            // TODO: Render option soon
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSection(
-    BuildContext context, {
-    required String title,
-    required Widget child,
-  }) {
+  Widget _buildVerticalDivider(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.labelSmall?.copyWith(
-            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-            fontSize: ResponsiveUtils.scaleFontSize(context, 10),
-          ),
-        ),
-        SizedBox(height: ResponsiveUtils.scalePadding(context, 4)),
-        child,
-      ],
+    return Container(
+      width: 1,
+      height: ResponsiveUtils.scaleButtonSize(context, 30),
+      margin: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.scalePadding(context, 16),
+      ),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.outline.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(0.5),
+      ),
     );
   }
 
@@ -105,7 +95,7 @@ class DrawingToolbarWidget extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveUtils.scalePadding(context, 1.5),
+        horizontal: ResponsiveUtils.scalePadding(context, 2.0),
       ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeWidth: width)),
@@ -156,7 +146,7 @@ class DrawingToolbarWidget extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveUtils.scalePadding(context, 1.5),
+        horizontal: ResponsiveUtils.scalePadding(context, 2.0),
       ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeColor: color)),
