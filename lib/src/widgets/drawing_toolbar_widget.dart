@@ -19,7 +19,7 @@ class DrawingToolbarWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: ResponsiveUtils.scaleButtonSize(context, 60),
+      height: ResponsiveUtils.scaleButtonSize(context, 70),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(
@@ -43,9 +43,9 @@ class DrawingToolbarWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Stroke width controls - show ALL on every device (6 items, needs more space)
+            // Stroke width controls - show ALL on every device (4 items, reduced from 6)
             Expanded(
-              flex: 6, // 6 items
+              flex: 4, // 4 items now instead of 6
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: DrawingSettings.availableStrokeWidths
@@ -89,10 +89,13 @@ class DrawingToolbarWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       width: 1,
-      height: ResponsiveUtils.scaleButtonSize(context, 18), // Even shorter
+      height: ResponsiveUtils.scaleButtonSize(
+        context,
+        24,
+      ), // Taller to match bigger buttons
       margin: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.scalePadding(context, 1),
-      ), // Even less margin
+      ),
       decoration: BoxDecoration(
         color: theme.colorScheme.outline.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(0.5),
@@ -103,17 +106,20 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildStrokeWidthButton(BuildContext context, double width) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeWidth == width;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(context, 20); // Smaller
+    final buttonSize = ResponsiveUtils.scaleButtonSize(
+      context,
+      28,
+    );
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.scalePadding(context, 0.1),
-      ), // Ultra minimal padding
+      ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeWidth: width)),
         borderRadius: BorderRadius.circular(
           ResponsiveUtils.getResponsiveBorderRadius(context, 4.0),
-        ), // Smaller radius
+        ),
         child: Container(
           width: buttonSize,
           height: buttonSize,
@@ -153,18 +159,24 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildColorButton(BuildContext context, Color color) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeColor == color;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(context, 20); // Smaller
-    final colorSize = ResponsiveUtils.scaleButtonSize(context, 10); // Smaller
+    final buttonSize = ResponsiveUtils.scaleButtonSize(
+      context,
+      28,
+    );
+    final colorSize = ResponsiveUtils.scaleButtonSize(
+      context,
+      14,
+    );
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.scalePadding(context, 0.1),
-      ), // Ultra minimal padding
+      ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeColor: color)),
         borderRadius: BorderRadius.circular(
           ResponsiveUtils.getResponsiveBorderRadius(context, 4.0),
-        ), // Smaller radius
+        ),
         child: Container(
           width: buttonSize,
           height: buttonSize,
@@ -207,7 +219,10 @@ class DrawingToolbarWidget extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     final isSelected = settings.drawType == drawType;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(context, 20); // Smaller
+    final buttonSize = ResponsiveUtils.scaleButtonSize(
+      context,
+      28,
+    );
 
     // Define icons and tooltips for each draw type
     IconData icon;
@@ -231,14 +246,14 @@ class DrawingToolbarWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.scalePadding(context, 0.1),
-      ), // Ultra minimal padding
+      ),
       child: Tooltip(
         message: tooltip,
         child: InkWell(
           onTap: () => onSettingsChanged(settings.copyWith(drawType: drawType)),
           borderRadius: BorderRadius.circular(
             ResponsiveUtils.getResponsiveBorderRadius(context, 4.0),
-          ), // Smaller radius
+          ),
           child: Container(
             width: buttonSize,
             height: buttonSize,
@@ -258,7 +273,7 @@ class DrawingToolbarWidget extends StatelessWidget {
             ),
             child: Icon(
               icon,
-              size: ResponsiveUtils.scaleIconSize(context, 10), // Smaller icon
+              size: ResponsiveUtils.scaleIconSize(context, 14), // Larger icon
               color: isSelected
                   ? theme.colorScheme.primary
                   : theme.colorScheme.onSurface.withValues(alpha: 0.7),
