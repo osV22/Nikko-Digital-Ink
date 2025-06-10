@@ -4,6 +4,7 @@ import '../widgets/onboarding_header_widget.dart';
 import '../widgets/status_section_widget.dart';
 import '../widgets/onboarding_continue_button.dart';
 import '../services/digital_ink_service.dart';
+import '../utils/responsive_utils.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -104,6 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isPhoneLandscape = ResponsiveUtils.isPhoneLandscape(context);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -129,30 +131,76 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 right: 16,
                 child: LanguageToggleWidget(),
               ),
-              // Main content
+              // Main content - responsive layout
               Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const OnboardingHeaderWidget(),
-                    const SizedBox(height: 48),
-                    StatusSectionWidget(
-                      isDownloading: _isDownloading,
-                      isModelDownloaded: _isModelDownloaded,
-                      downloadStatus: _downloadStatus,
-                    ),
-                    const SizedBox(height: 48),
-                    OnboardingContinueButton(
-                      isModelDownloaded: _isModelDownloaded,
-                    ),
-                  ],
+                padding: EdgeInsets.all(
+                  isPhoneLandscape
+                      ? 16.0
+                      : 24.0, // Less padding on iPhone landscape
                 ),
+                child: isPhoneLandscape
+                    ? _buildLandscapeLayout()
+                    : _buildPortraitLayout(),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPortraitLayout() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const OnboardingHeaderWidget(),
+        const SizedBox(height: 48),
+        StatusSectionWidget(
+          isDownloading: _isDownloading,
+          isModelDownloaded: _isModelDownloaded,
+          downloadStatus: _downloadStatus,
+        ),
+        const SizedBox(height: 48),
+        OnboardingContinueButton(
+          isModelDownloaded: _isModelDownloaded,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLandscapeLayout() {
+    return Row(
+      children: [
+        // Left side - Header (logo, title, subtitle)
+        Expanded(
+          flex: 5,
+          child: Container(
+            padding: const EdgeInsets.only(right: 24.0),
+            child: const Center(
+              child: OnboardingHeaderWidget(),
+            ),
+          ),
+        ),
+        // Right side - Status and continue button
+        Expanded(
+          flex: 4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              StatusSectionWidget(
+                isDownloading: _isDownloading,
+                isModelDownloaded: _isModelDownloaded,
+                downloadStatus: _downloadStatus,
+              ),
+              const SizedBox(height: 32),
+              OnboardingContinueButton(
+                isModelDownloaded: _isModelDownloaded,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
