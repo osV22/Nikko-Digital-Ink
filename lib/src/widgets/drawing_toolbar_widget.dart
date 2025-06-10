@@ -17,9 +17,20 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    // Special handling for iPhone landscape - use much smaller height
+    final toolbarHeight = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            50,
+          ) // Much smaller for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            70,
+          ); // Normal size for other devices
+
     return Container(
       width: double.infinity,
-      height: ResponsiveUtils.scaleButtonSize(context, 70),
+      height: toolbarHeight,
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(
@@ -87,12 +98,21 @@ class DrawingToolbarWidget extends StatelessWidget {
 
   Widget _buildVerticalDivider(BuildContext context) {
     final theme = Theme.of(context);
+
+    // Smaller divider for iPhone landscape
+    final dividerHeight = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            16,
+          ) // Smaller for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            24,
+          ); // Normal size for other devices
+
     return Container(
       width: 1,
-      height: ResponsiveUtils.scaleButtonSize(
-        context,
-        24,
-      ), // Taller to match bigger buttons
+      height: dividerHeight,
       margin: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.scalePadding(context, 1),
       ),
@@ -106,10 +126,17 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildStrokeWidthButton(BuildContext context, double width) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeWidth == width;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(
-      context,
-      28,
-    );
+
+    // Smaller buttons for iPhone landscape to prevent overflow
+    final buttonSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            20,
+          ) // Smaller for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            28,
+          ); // Normal size for other devices
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -159,14 +186,26 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildColorButton(BuildContext context, Color color) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeColor == color;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(
-      context,
-      28,
-    );
-    final colorSize = ResponsiveUtils.scaleButtonSize(
-      context,
-      14,
-    );
+
+    // Smaller buttons for iPhone landscape to prevent overflow
+    final buttonSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            20,
+          ) // Smaller for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            28,
+          ); // Normal size for other devices
+    final colorSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            8,
+          ) // Smaller color circle for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            14,
+          ); // Normal size for other devices
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -219,10 +258,17 @@ class DrawingToolbarWidget extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     final isSelected = settings.drawType == drawType;
-    final buttonSize = ResponsiveUtils.scaleButtonSize(
-      context,
-      28,
-    );
+
+    // Smaller buttons for iPhone landscape to prevent overflow
+    final buttonSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleButtonSize(
+            context,
+            20,
+          ) // Smaller for iPhone landscape
+        : ResponsiveUtils.scaleButtonSize(
+            context,
+            28,
+          ); // Normal size for other devices
 
     // Define icons and tooltips for each draw type
     IconData icon;
@@ -273,7 +319,15 @@ class DrawingToolbarWidget extends StatelessWidget {
             ),
             child: Icon(
               icon,
-              size: ResponsiveUtils.scaleIconSize(context, 14), // Larger icon
+              size: ResponsiveUtils.isPhoneLandscape(context)
+                  ? ResponsiveUtils.scaleIconSize(
+                      context,
+                      10,
+                    ) // Smaller icon for iPhone landscape
+                  : ResponsiveUtils.scaleIconSize(
+                      context,
+                      14,
+                    ), // Normal size for other devices
               color: isSelected
                   ? theme.colorScheme.primary
                   : theme.colorScheme.onSurface.withValues(alpha: 0.7),

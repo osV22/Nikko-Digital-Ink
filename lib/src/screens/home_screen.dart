@@ -61,10 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               final isLandscape = constraints.maxWidth > constraints.maxHeight;
-              final toolbarHeight = ResponsiveUtils.scaleButtonSize(
-                context,
-                60,
-              );
+
+              // Different toolbar heights for iPhone landscape vs other devices
+              final toolbarHeight = ResponsiveUtils.isPhoneLandscape(context)
+                  ? ResponsiveUtils.scaleButtonSize(
+                      context,
+                      45,
+                    ) // Much smaller for iPhone landscape
+                  : ResponsiveUtils.scaleButtonSize(
+                      context,
+                      60,
+                    ); // Normal size for other devices
+
               final margin = ResponsiveUtils.scalePadding(context, 8.0);
 
               if (isLandscape) {

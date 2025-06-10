@@ -25,10 +25,27 @@ class ResponsiveUtils {
     return getScreenWidth(context) >= _tabletBreakpoint;
   }
 
+  /// Detects if we're on iPhone in landscape mode (constrained height)
+  static bool isPhoneLandscape(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isPhoneSize =
+        size.width < _phoneBreakpoint || size.height < _phoneBreakpoint;
+    final isLandscape = size.width > size.height;
+    final hasConstrainedHeight =
+        size.height < 500; // iPhone landscape height constraint
+
+    return isPhoneSize && isLandscape && hasConstrainedHeight;
+  }
+
   /// Returns a scaling factor based on screen size
-  /// Phone: 1.0, Tablet: 1.3-1.5, Desktop: 1.6-2.0
+  /// Phone: 1.0, Phone Landscape: 0.85 (smaller to prevent overflow), Tablet: 1.3-1.5, Desktop: 1.6-2.0
   static double getScaleFactor(BuildContext context) {
     final width = getScreenWidth(context);
+
+    // Special handling for iPhone landscape - use smaller scale to prevent overflow
+    if (isPhoneLandscape(context)) {
+      return 0.85; // Slightly smaller than normal phone to fit constrained height
+    }
 
     if (width < _phoneBreakpoint) {
       return 1.0; // Phone
