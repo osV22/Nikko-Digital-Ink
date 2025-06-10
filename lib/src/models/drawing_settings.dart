@@ -16,15 +16,22 @@ class DrawingSettings with _$DrawingSettings {
     @Default(2.0) double velocityRange,
   }) = _DrawingSettings;
 
-  static const List<double> availableStrokeWidths = [2.0, 4.0, 6.0, 8.0];
+  static const List<double> availableStrokeWidths = [
+    1.5,
+    3.0,
+    4.5,
+    6.0,
+    8.0,
+    10.0,
+  ];
 
   static const List<double> availableMaxStrokeWidths = [6.0, 8.0, 12.0, 16.0];
 
   static const List<Color> availableColors = [
     Color(0xFF000000), // Black (default)
     Color(0xFF1976D2), // Blue
-    Color(0xFF388E3C), // Green
-    Color(0xFFFF1493), // Neon pink (DeepPink)
+    Color(0xFF00FF32), // Bright Neon Green (replaced boring green)
+    Color(0xFFFF1493), // Neon Pink (DeepPink)
   ];
 
   static const List<SignatureDrawType> availableDrawTypes = [

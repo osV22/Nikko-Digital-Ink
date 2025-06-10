@@ -17,6 +17,13 @@ class NikkoInkApp extends StatefulWidget {
 class NikkoInkAppState extends State<NikkoInkApp> {
   Locale _locale = const Locale('en');
 
+  // Create router once to prevent recreation during rebuilds
+  late final _router = AppRouter.createRouter();
+
+  // Add a global key to maintain app state across rebuilds
+  static final GlobalKey<NavigatorState> _navigatorKey =
+      GlobalKey<NavigatorState>();
+
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -28,11 +35,13 @@ class NikkoInkAppState extends State<NikkoInkApp> {
     return ResponsiveThemeBuilder(
       builder: (context, lightTheme, darkTheme) {
         return MaterialApp.router(
+          key: const ValueKey('nikko_ink_app'), // Stable key to maintain state
           title: 'Nikko Digital Ink',
+          // Use responsive themes instead of static ones
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: ThemeMode.dark, // Force dark mode for better contrast
-          routerConfig: AppRouter.createRouter(),
+          routerConfig: _router, // Use the stable router instance
           debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
