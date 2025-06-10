@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../utils/responsive_utils.dart';
 import '../../l10n/app_localizations.dart';
 
 class OnboardingContinueButton extends StatelessWidget {
@@ -26,9 +27,13 @@ class OnboardingContinueButton extends StatelessWidget {
           foregroundColor: isModelDownloaded
               ? Colors.white
               : theme.colorScheme.onSurface.withValues(alpha: 0.6),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(
+            vertical: ResponsiveUtils.scalePadding(context, 16),
+          ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+            ),
           ),
         ),
         child: Text(
@@ -37,6 +42,7 @@ class OnboardingContinueButton extends StatelessWidget {
               : (l10n?.pleaseWait ?? 'Please Wait...'),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
+            fontSize: ResponsiveUtils.scaleFontSize(context, 16),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'router.dart';
-import 'src/style/theme.dart';
+import 'src/widgets/responsive_theme_builder.dart';
 import 'l10n/app_localizations.dart';
 
 class NikkoInkApp extends StatefulWidget {
@@ -25,16 +25,20 @@ class NikkoInkAppState extends State<NikkoInkApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Nikko Digital Ink',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      routerConfig: AppRouter.createRouter(),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: _locale,
+    return ResponsiveThemeBuilder(
+      builder: (context, lightTheme, darkTheme) {
+        return MaterialApp.router(
+          title: 'Nikko Digital Ink',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: ThemeMode.dark, // Force dark mode for better contrast
+          routerConfig: AppRouter.createRouter(),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: _locale,
+        );
+      },
     );
   }
 }

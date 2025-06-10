@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/drawing_settings.dart';
+import '../utils/responsive_utils.dart';
 
 class DrawingToolbarWidget extends StatelessWidget {
   final DrawingSettings settings;
@@ -17,10 +18,12 @@ class DrawingToolbarWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 60,
+      height: ResponsiveUtils.scaleButtonSize(context, 60),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+        ),
         border: Border.all(
           color: theme.colorScheme.outline.withValues(alpha: 0.2),
           width: 1,
@@ -34,7 +37,9 @@ class DrawingToolbarWidget extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.scalePadding(context, 12.0),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -50,7 +55,7 @@ class DrawingToolbarWidget extends StatelessWidget {
                     .toList(),
               ),
             ),
-            const SizedBox(width: 24),
+            SizedBox(width: ResponsiveUtils.scalePadding(context, 24)),
 
             // Color picker
             _buildSection(
@@ -84,10 +89,10 @@ class DrawingToolbarWidget extends StatelessWidget {
           title,
           style: theme.textTheme.labelSmall?.copyWith(
             color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-            fontSize: 10,
+            fontSize: ResponsiveUtils.scaleFontSize(context, 10),
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: ResponsiveUtils.scalePadding(context, 4)),
         child,
       ],
     );
@@ -96,20 +101,27 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildStrokeWidthButton(BuildContext context, double width) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeWidth == width;
+    final buttonSize = ResponsiveUtils.scaleButtonSize(context, 26);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 1.5),
+      padding: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.scalePadding(context, 1.5),
+      ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeWidth: width)),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getResponsiveBorderRadius(context, 6.0),
+        ),
         child: Container(
-          width: 26,
-          height: 26,
+          width: buttonSize,
+          height: buttonSize,
           decoration: BoxDecoration(
             color: isSelected
                 ? theme.colorScheme.primary.withValues(alpha: 0.1)
                 : null,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.getResponsiveBorderRadius(context, 6.0),
+            ),
             border: isSelected
                 ? Border.all(
                     color: theme.colorScheme.primary,
@@ -119,8 +131,12 @@ class DrawingToolbarWidget extends StatelessWidget {
           ),
           child: Center(
             child: Container(
-              width: width * 2, // Scale for visual representation
-              height: width * 2,
+              width:
+                  (width * 2) *
+                  ResponsiveUtils.getScaleFactor(
+                    context,
+                  ), // Scale for visual representation
+              height: (width * 2) * ResponsiveUtils.getScaleFactor(context),
               decoration: BoxDecoration(
                 color: theme.colorScheme.onSurface,
                 shape: BoxShape.circle,
@@ -135,17 +151,25 @@ class DrawingToolbarWidget extends StatelessWidget {
   Widget _buildColorButton(BuildContext context, Color color) {
     final theme = Theme.of(context);
     final isSelected = settings.strokeColor == color;
+    final buttonSize = ResponsiveUtils.scaleButtonSize(context, 26);
+    final colorSize = ResponsiveUtils.scaleButtonSize(context, 14);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 1.5),
+      padding: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.scalePadding(context, 1.5),
+      ),
       child: InkWell(
         onTap: () => onSettingsChanged(settings.copyWith(strokeColor: color)),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getResponsiveBorderRadius(context, 6.0),
+        ),
         child: Container(
-          width: 26,
-          height: 26,
+          width: buttonSize,
+          height: buttonSize,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.getResponsiveBorderRadius(context, 6.0),
+            ),
             border: isSelected
                 ? Border.all(
                     color: theme.colorScheme.primary,
@@ -158,8 +182,8 @@ class DrawingToolbarWidget extends StatelessWidget {
           ),
           child: Center(
             child: Container(
-              width: 14,
-              height: 14,
+              width: colorSize,
+              height: colorSize,
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,

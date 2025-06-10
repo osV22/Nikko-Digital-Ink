@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawing_bloc.dart';
+import '../utils/responsive_utils.dart';
 import '../../l10n/app_localizations.dart';
 
 class OutputWidget extends StatelessWidget {
@@ -12,23 +13,27 @@ class OutputWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Card(
-      elevation: 2,
+      elevation: ResponsiveUtils.getResponsiveElevation(context, 2.0),
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+        ),
       ),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+          ),
           border: Border.all(
             color: theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(ResponsiveUtils.scalePadding(context, 8.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,28 +42,33 @@ class OutputWidget extends StatelessWidget {
                   Icon(
                     Icons.text_fields,
                     color: theme.colorScheme.primary,
-                    size: 20,
+                    size: ResponsiveUtils.scaleIconSize(context, 20),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: ResponsiveUtils.scalePadding(context, 8)),
                   Text(
                     l10n?.recognizedText ?? 'Recognized Text',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: theme.colorScheme.onSurface,
+                      fontSize: ResponsiveUtils.scaleFontSize(context, 16),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.scalePadding(context, 16)),
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(
+                    ResponsiveUtils.scalePadding(context, 16.0),
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.surfaceContainerHighest.withValues(
                       alpha: 0.1,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(
+                      ResponsiveUtils.getResponsiveBorderRadius(context, 8.0),
+                    ),
                     border: Border.all(
                       color: theme.colorScheme.outline.withValues(alpha: 0.05),
                     ),
@@ -78,6 +88,10 @@ class OutputWidget extends StatelessWidget {
                                     alpha: 0.6,
                                   ),
                                   fontStyle: FontStyle.italic,
+                                  fontSize: ResponsiveUtils.scaleFontSize(
+                                    context,
+                                    16,
+                                  ),
                                 ),
                               )
                             else
@@ -87,17 +101,33 @@ class OutputWidget extends StatelessWidget {
                                   color: theme.colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
-                                  fontSize: 50,
+                                  // Make the recognized text scale even more for better visibility on iPad
+                                  fontSize: ResponsiveUtils.scaleFontSize(
+                                    context,
+                                    50,
+                                  ),
                                 ),
                               ),
                             if (state.errorMessage != null) ...[
-                              const SizedBox(height: 12),
+                              SizedBox(
+                                height: ResponsiveUtils.scalePadding(
+                                  context,
+                                  12,
+                                ),
+                              ),
                               Container(
-                                padding: const EdgeInsets.all(12),
+                                padding: EdgeInsets.all(
+                                  ResponsiveUtils.scalePadding(context, 12),
+                                ),
                                 decoration: BoxDecoration(
                                   color: theme.colorScheme.errorContainer
                                       .withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(
+                                    ResponsiveUtils.getResponsiveBorderRadius(
+                                      context,
+                                      6.0,
+                                    ),
+                                  ),
                                   border: Border.all(
                                     color: theme.colorScheme.error.withValues(
                                       alpha: 0.3,
@@ -109,15 +139,28 @@ class OutputWidget extends StatelessWidget {
                                     Icon(
                                       Icons.error_outline,
                                       color: theme.colorScheme.error,
-                                      size: 16,
+                                      size: ResponsiveUtils.scaleIconSize(
+                                        context,
+                                        16,
+                                      ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    SizedBox(
+                                      width: ResponsiveUtils.scalePadding(
+                                        context,
+                                        8,
+                                      ),
+                                    ),
                                     Expanded(
                                       child: Text(
                                         state.errorMessage!,
                                         style: theme.textTheme.bodySmall
                                             ?.copyWith(
                                               color: theme.colorScheme.error,
+                                              fontSize:
+                                                  ResponsiveUtils.scaleFontSize(
+                                                    context,
+                                                    12,
+                                                  ),
                                             ),
                                       ),
                                     ),

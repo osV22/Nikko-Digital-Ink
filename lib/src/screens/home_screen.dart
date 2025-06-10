@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Ink;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawing_bloc.dart';
 import '../services/digital_ink_service.dart';
+import '../utils/responsive_utils.dart';
 import '../widgets/output_widget.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/drawing_canvas_widget.dart';
@@ -55,11 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider.value(
       value: _drawingBloc,
       child: Scaffold(
-        backgroundColor: Colors.grey[25],
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
               final isLandscape = constraints.maxWidth > constraints.maxHeight;
+              final toolbarHeight = ResponsiveUtils.scaleButtonSize(
+                context,
+                60,
+              );
+              final margin = ResponsiveUtils.scalePadding(context, 8.0);
 
               if (isLandscape) {
                 // Landscape layout: Drawing on left, output on right
@@ -69,13 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       flex: 6,
                       child: Container(
-                        margin: const EdgeInsets.all(8.0),
+                        margin: EdgeInsets.all(margin),
                         child: Column(
                           children: [
                             // Drawing toolbar above canvas in landscape
                             Container(
-                              height: 60,
-                              margin: const EdgeInsets.only(bottom: 8.0),
+                              height: toolbarHeight,
+                              margin: EdgeInsets.only(bottom: margin),
                               child: DrawingToolbarWidget(
                                 settings: _drawingSettings,
                                 onSettingsChanged: _onDrawingSettingsChanged,
@@ -86,9 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 settings: _drawingSettings,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: margin),
                             SizedBox(
-                              height: 60,
+                              height: toolbarHeight,
                               child: const ToolbarWidget(),
                             ),
                           ],
@@ -99,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       flex: 4,
                       child: Container(
-                        margin: const EdgeInsets.all(8.0),
+                        margin: EdgeInsets.all(margin),
                         child: const OutputWidget(),
                       ),
                     ),
@@ -108,37 +114,37 @@ class _HomeScreenState extends State<HomeScreen> {
               } else {
                 // Portrait layout: Output on top, toolbar, drawing, drawing toolbar
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(margin),
                   child: Column(
                     children: [
                       // Output section - 30% of screen
                       Expanded(
                         flex: 30,
                         child: Container(
-                          margin: const EdgeInsets.only(bottom: 8.0),
+                          margin: EdgeInsets.only(bottom: margin),
                           child: const OutputWidget(),
                         ),
                       ),
-                      // Toolbar section - 10% of screen
+                      // Toolbar section - responsive height
                       Container(
-                        height: 60,
-                        margin: const EdgeInsets.symmetric(vertical: 4.0),
+                        height: toolbarHeight,
+                        margin: EdgeInsets.symmetric(vertical: margin / 2),
                         child: const ToolbarWidget(),
                       ),
                       // Drawing section - 40% of screen
                       Expanded(
                         flex: 40,
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 4.0),
+                          margin: EdgeInsets.symmetric(vertical: margin / 2),
                           child: DrawingCanvasWidget(
                             settings: _drawingSettings,
                           ),
                         ),
                       ),
-                      // Drawing toolbar section - 10% of screen
+                      // Drawing toolbar section - responsive height
                       Container(
-                        height: 60,
-                        margin: const EdgeInsets.only(top: 4.0),
+                        height: toolbarHeight,
+                        margin: EdgeInsets.only(top: margin / 2),
                         child: DrawingToolbarWidget(
                           settings: _drawingSettings,
                           onSettingsChanged: _onDrawingSettingsChanged,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/responsive_utils.dart';
 import '../../l10n/app_localizations.dart';
 
 class OnboardingHeaderWidget extends StatelessWidget {
@@ -13,22 +14,24 @@ class OnboardingHeaderWidget extends StatelessWidget {
       children: [
         Icon(
           Icons.brush,
-          size: 80,
+          size: ResponsiveUtils.scaleIconSize(context, 80),
           color: theme.colorScheme.primary,
         ),
-        const SizedBox(height: 32),
+        SizedBox(height: ResponsiveUtils.scalePadding(context, 32)),
         Text(
           l10n?.appTitle ?? 'Nikko Digital Ink',
           style: theme.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: theme.colorScheme.onSurface,
+            fontSize: ResponsiveUtils.scaleFontSize(context, 28),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.scalePadding(context, 16)),
         Text(
           l10n?.appSubtitle ?? 'Japanese Character Recognition',
           style: theme.textTheme.titleMedium?.copyWith(
             color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+            fontSize: ResponsiveUtils.scaleFontSize(context, 16),
           ),
         ),
       ],

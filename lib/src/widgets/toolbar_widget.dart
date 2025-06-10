@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawing_bloc.dart';
+import '../utils/responsive_utils.dart';
 import '../../l10n/app_localizations.dart';
 
 class ToolbarWidget extends StatelessWidget {
@@ -10,19 +11,27 @@ class ToolbarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final scaleFactor = ResponsiveUtils.getScaleFactor(context);
 
     return Card(
-      elevation: 1,
+      elevation: ResponsiveUtils.getResponsiveElevation(context, 1.0),
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+        ),
       ),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.scalePadding(context, 8.0),
+          vertical: ResponsiveUtils.scalePadding(context, 8.0),
+        ),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.getResponsiveBorderRadius(context, 12.0),
+          ),
           border: Border.all(
             color: theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 1,
@@ -37,62 +46,76 @@ class ToolbarWidget extends StatelessWidget {
                   const DrawingEvent.processRequested(),
                 );
               },
-              icon: const Icon(Icons.auto_awesome, size: 18),
-              label: Text(l10n?.process ?? 'Process'),
+              icon: Icon(
+                Icons.auto_awesome,
+                size: ResponsiveUtils.scaleIconSize(context, 18),
+              ),
+              label: Text(
+                l10n?.process ?? 'Process',
+                style: TextStyle(
+                  fontSize: ResponsiveUtils.scaleFontSize(context, 14),
+                ),
+              ),
               style: FilledButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,
                 foregroundColor: theme.colorScheme.onPrimary,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: ResponsiveUtils.getResponsivePadding(context),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveUtils.getResponsiveBorderRadius(context, 8.0),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.scalePadding(context, 12)),
             OutlinedButton.icon(
               onPressed: () {
                 context.read<DrawingBloc>().add(
                   const DrawingEvent.clearRequested(),
                 );
               },
-              icon: const Icon(Icons.clear_all, size: 18),
-              label: Text(l10n?.clear ?? 'Clear'),
+              icon: Icon(
+                Icons.clear_all,
+                size: ResponsiveUtils.scaleIconSize(context, 18),
+              ),
+              label: Text(
+                l10n?.clear ?? 'Clear',
+                style: TextStyle(
+                  fontSize: ResponsiveUtils.scaleFontSize(context, 14),
+                ),
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: theme.colorScheme.error,
                 side: BorderSide(
                   color: theme.colorScheme.error.withValues(alpha: 0.5),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: ResponsiveUtils.getResponsivePadding(context),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveUtils.getResponsiveBorderRadius(context, 8.0),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.scalePadding(context, 12)),
             Flexible(
               child: BlocBuilder<DrawingBloc, DrawingState>(
                 builder: (context, state) {
                   return Container(
-                    width: 140,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                    width: ResponsiveUtils.scaleButtonSize(context, 140),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ResponsiveUtils.scalePadding(context, 12),
+                      vertical: ResponsiveUtils.scalePadding(context, 6),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          width: 16,
-                          height: 16,
+                          width: ResponsiveUtils.scaleIconSize(context, 16),
+                          height: ResponsiveUtils.scaleIconSize(context, 16),
                           child: state.isRecognizing
                               ? CircularProgressIndicator(
-                                  strokeWidth: 2,
+                                  strokeWidth: 2 * scaleFactor,
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                     theme.colorScheme.primary,
                                   ),
@@ -100,10 +123,15 @@ class ToolbarWidget extends StatelessWidget {
                               : Icon(
                                   Icons.gesture,
                                   color: theme.colorScheme.onSurfaceVariant,
-                                  size: 16,
+                                  size: ResponsiveUtils.scaleIconSize(
+                                    context,
+                                    16,
+                                  ),
                                 ),
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(
+                          width: ResponsiveUtils.scalePadding(context, 6),
+                        ),
                         Flexible(
                           child: Text(
                             state.isRecognizing
@@ -113,13 +141,21 @@ class ToolbarWidget extends StatelessWidget {
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                               fontWeight: FontWeight.w500,
+                              fontSize: ResponsiveUtils.scaleFontSize(
+                                context,
+                                12,
+                              ),
                             ),
                           ),
                         ),
                         if (state.errorMessage != null) ...[
-                          const SizedBox(width: 12),
+                          SizedBox(
+                            width: ResponsiveUtils.scalePadding(context, 12),
+                          ),
                           Container(
-                            padding: const EdgeInsets.all(4),
+                            padding: EdgeInsets.all(
+                              ResponsiveUtils.scalePadding(context, 4),
+                            ),
                             decoration: BoxDecoration(
                               color: theme.colorScheme.errorContainer
                                   .withValues(
@@ -130,7 +166,7 @@ class ToolbarWidget extends StatelessWidget {
                             child: Icon(
                               Icons.error_outline,
                               color: theme.colorScheme.error,
-                              size: 14,
+                              size: ResponsiveUtils.scaleIconSize(context, 14),
                             ),
                           ),
                         ],
