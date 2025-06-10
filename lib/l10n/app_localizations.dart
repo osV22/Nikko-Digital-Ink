@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// The title of the application
   ///
   /// In en, this message translates to:
-  /// **'Nikko Digital Ink'**
+  /// **'Nikko Ink'**
   String get appTitle;
 
   /// The subtitle of the application

@@ -12,14 +12,15 @@ class OnboardingHeaderWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Icon(
-          Icons.brush,
-          size: ResponsiveUtils.scaleIconSize(context, 80),
-          color: theme.colorScheme.primary,
+        Image.asset(
+          'assets/icons/logo.png',
+          width: ResponsiveUtils.scaleIconSize(context, 120),
+          height: ResponsiveUtils.scaleIconSize(context, 120),
+          fit: BoxFit.contain,
         ),
         SizedBox(height: ResponsiveUtils.scalePadding(context, 32)),
         Text(
-          l10n?.appTitle ?? 'Nikko Digital Ink',
+          l10n?.appTitle ?? 'Nikko Ink',
           style: theme.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: theme.colorScheme.onSurface,

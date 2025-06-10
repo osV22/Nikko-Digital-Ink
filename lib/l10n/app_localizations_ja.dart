@@ -9,7 +9,7 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appTitle => 'ニッコーデジタルインク';
+  String get appTitle => 'ニッコーインク';
 
   @override
   String get appSubtitle => '日本語文字認識';

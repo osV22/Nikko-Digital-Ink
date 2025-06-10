@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Nikko Digital Ink';
+  String get appTitle => 'Nikko Ink';
 
   @override
   String get appSubtitle => 'Japanese Character Recognition';

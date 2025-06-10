@@ -4,7 +4,9 @@ What?
 - An app that takes drawing strokes and outputs digital equivlant using Google's ML Kit's Digital Ink Japanese language model. 
 
 Why?
-
+- To learn about digital ink ahead of a meeting
+- Why Nikko? 
+    - Will explain in person ;) Its a lovely city in the Japanese mountains!
 
 How?
 - A tiny <20MB model is downloaded on the user's device. In this case we specifically target Japanese langauge because that's the audience this particualar exmaple is built for.
