@@ -63,14 +63,26 @@ class _HomeScreenState extends State<HomeScreen> {
               final isLandscape = constraints.maxWidth > constraints.maxHeight;
 
               // Different toolbar heights for iPhone landscape vs other devices
-              final toolbarHeight = ResponsiveUtils.isPhoneLandscape(context)
+              final mainToolbarHeight =
+                  ResponsiveUtils.isPhoneLandscape(context)
                   ? ResponsiveUtils.scaleButtonSize(
                       context,
-                      45,
-                    ) // Much smaller for iPhone landscape
+                      55,
+                    ) // More height for main toolbar on iPhone landscape
                   : ResponsiveUtils.scaleButtonSize(
                       context,
                       60,
+                    ); // Normal size for other devices
+
+              final drawingToolbarHeight =
+                  ResponsiveUtils.isPhoneLandscape(context)
+                  ? ResponsiveUtils.scaleButtonSize(
+                      context,
+                      50,
+                    ) // Keep drawing toolbar compact
+                  : ResponsiveUtils.scaleButtonSize(
+                      context,
+                      70,
                     ); // Normal size for other devices
 
               final margin = ResponsiveUtils.scalePadding(context, 8.0);
@@ -88,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             // Drawing toolbar above canvas in landscape
                             Container(
-                              height: toolbarHeight,
+                              height: drawingToolbarHeight,
                               margin: EdgeInsets.only(bottom: margin),
                               child: DrawingToolbarWidget(
                                 settings: _drawingSettings,
@@ -102,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(height: margin),
                             SizedBox(
-                              height: toolbarHeight,
+                              height: mainToolbarHeight,
                               child: const ToolbarWidget(),
                             ),
                           ],
@@ -135,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       // Toolbar section - responsive height
                       Container(
-                        height: toolbarHeight,
+                        height: mainToolbarHeight,
                         margin: EdgeInsets.symmetric(vertical: margin / 2),
                         child: const ToolbarWidget(),
                       ),
@@ -151,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       // Drawing toolbar section - responsive height
                       Container(
-                        height: toolbarHeight,
+                        height: drawingToolbarHeight,
                         margin: EdgeInsets.only(top: margin / 2),
                         child: DrawingToolbarWidget(
                           settings: _drawingSettings,

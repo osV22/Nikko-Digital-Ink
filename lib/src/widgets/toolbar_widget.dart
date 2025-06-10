@@ -13,6 +13,37 @@ class ToolbarWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final scaleFactor = ResponsiveUtils.getScaleFactor(context);
 
+    // iPhone landscape specific smaller sizes to fit in constrained height
+    final iconSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleIconSize(
+            context,
+            16,
+          ) // Smaller icons for iPhone landscape
+        : ResponsiveUtils.scaleIconSize(
+            context,
+            18,
+          ); // Normal size for other devices
+
+    final fontSize = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scaleFontSize(
+            context,
+            12,
+          ) // Smaller font for iPhone landscape
+        : ResponsiveUtils.scaleFontSize(
+            context,
+            14,
+          ); // Normal size for other devices
+
+    final verticalPadding = ResponsiveUtils.isPhoneLandscape(context)
+        ? ResponsiveUtils.scalePadding(
+            context,
+            4.0,
+          ) // Less vertical padding for iPhone landscape
+        : ResponsiveUtils.scalePadding(
+            context,
+            8.0,
+          ); // Normal padding for other devices
+
     return Card(
       elevation: ResponsiveUtils.getResponsiveElevation(context, 1.0),
       margin: EdgeInsets.zero,
@@ -25,7 +56,7 @@ class ToolbarWidget extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveUtils.scalePadding(context, 8.0),
-          vertical: ResponsiveUtils.scalePadding(context, 8.0),
+          vertical: verticalPadding,
         ),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
@@ -48,12 +79,12 @@ class ToolbarWidget extends StatelessWidget {
               },
               icon: Icon(
                 Icons.auto_awesome,
-                size: ResponsiveUtils.scaleIconSize(context, 18),
+                size: iconSize,
               ),
               label: Text(
                 l10n?.process ?? 'Process',
                 style: TextStyle(
-                  fontSize: ResponsiveUtils.scaleFontSize(context, 14),
+                  fontSize: fontSize,
                 ),
               ),
               style: FilledButton.styleFrom(
@@ -76,12 +107,12 @@ class ToolbarWidget extends StatelessWidget {
               },
               icon: Icon(
                 Icons.clear_all,
-                size: ResponsiveUtils.scaleIconSize(context, 18),
+                size: iconSize,
               ),
               label: Text(
                 l10n?.clear ?? 'Clear',
                 style: TextStyle(
-                  fontSize: ResponsiveUtils.scaleFontSize(context, 14),
+                  fontSize: fontSize,
                 ),
               ),
               style: OutlinedButton.styleFrom(
@@ -105,7 +136,7 @@ class ToolbarWidget extends StatelessWidget {
                     width: ResponsiveUtils.scaleButtonSize(context, 140),
                     padding: EdgeInsets.symmetric(
                       horizontal: ResponsiveUtils.scalePadding(context, 12),
-                      vertical: ResponsiveUtils.scalePadding(context, 6),
+                      vertical: verticalPadding,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
