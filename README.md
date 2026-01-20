@@ -1,5 +1,8 @@
 # Nikko Digital Ink
 
+Quick Test
+
+
 What?
 - An app that takes drawing strokes and outputs digital equivlant using Google's ML Kit's Digital Ink Japanese language model. 
 
